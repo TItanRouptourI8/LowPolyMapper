@@ -1,6 +1,11 @@
 from tkinter import *
+from loadImg import loadimg
+from draw import canvas_adapter
+#load the img
+loader = loadimg()
 
 
+#tkinter init
 window = Tk()
 window.title("LowPolyMapper")
 window.iconbitmap("icon.ico")
@@ -30,8 +35,6 @@ def get_options_panel_width():
 
 
 
-
-
 #Creating Options window
 ToolBox = Frame(window, width =(getwindow_width() / 10) * 3)
 ToolBox.pack(fill=BOTH, expand=1, padx=2, pady=2)
@@ -49,6 +52,7 @@ root1.pack()
 Label(ToolBox, text="Toolbox", anchor='n', borderwidth=2, relief=RAISED).pack(padx=2, pady=2)
 Label(Map, text="Map", anchor='n').pack(padx=2, fill=X)
 
+canvAdapter = canvas_adapter(Map)
 
 def change_painter_size(ScaleValue):
     offset = int(painter_size.get())
@@ -64,7 +68,7 @@ def add_painters():
 def add_painter_options():
     painter_options_frame = LabelFrame(ToolBox, text="Options", padx = 2, pady = 2)
     painter_options_frame.pack(side=BOTTOM, expand=1, fill=BOTH)
-    Scale(painter_options_frame, orient = HORIZONTAL, variable = painter_size, command= change_painter_size).pack(fill=X)
+    Scale(painter_options_frame, orient = HORIZONTAL, variable = canvAdapter.painter_size, command= canvAdapter.change_painter_size).pack(fill=X)
 
 def add_options():
     add_painters()
@@ -80,6 +84,7 @@ def canvas_hover(event):
 
 
 canvas = Canvas(Map, bg="#4c94a1")
+
 canvas.pack(expand=1, fill=BOTH, padx=3, pady=3)
 canvas.bind('<Motion>', canvas_hover)
 painter = canvas.create_oval(5, 5,10, 10, fill="black")
