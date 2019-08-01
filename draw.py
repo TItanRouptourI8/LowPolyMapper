@@ -12,7 +12,16 @@ class canvas_adapter():
     def __init__(self, Map):
         self.canvas = Canvas(Map, bg="#4c94a1")
         self.canvas.pack(expand=1, fill=BOTH, padx=3, pady=3)
+        self.map = mapper.Map(self.canvas, 50, 50, 10)
+        #events initialisations
+
         self.canvas.bind('<Motion>', self.canvas_hover)
+        self.canvas.bind('<B3-Motion>', self.map.right_motion)
+        self.canvas.bind('<Button-3>', self.map.right_only)
+        self.delta = (0,0)
+        self.start_right_click = (0,0)
+        #painter initialisation
+
         self.painter = self.canvas.create_oval(5, 5,10, 10, fill="black")
         self.painter_size = IntVar()
         self.painter_type = 0
@@ -20,7 +29,7 @@ class canvas_adapter():
 
         #map initialisation
 
-        self.map = mapper.Map(self.canvas, 50,50,10)
+
         self.map.create_map()
         self.map.read_map()
 
@@ -36,3 +45,5 @@ class canvas_adapter():
 
         self.canvas.coords(self.painter, event.x - offset / 2, event.y - offset / 2, event.x + offset - offset / 2,
                       event.y + offset - offset / 2)
+
+
