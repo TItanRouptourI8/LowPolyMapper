@@ -1,15 +1,18 @@
 from tkinter import *
 from loadImg import loadimg
 from draw import canvas_adapter
-#load the img
-loader = loadimg()
+
 
 
 #tkinter init
 window = Tk()
 window.title("LowPolyMapper")
 window.iconbitmap("icon.ico")
-window.geometry("720x480")
+window.geometry("1080x720")
+
+#load the img
+loader = loadimg()
+
 
 root1 = PanedWindow(window, orient = HORIZONTAL)
 root1.pack(fill = BOTH, expand = 1)
@@ -43,6 +46,7 @@ root1.pack()
 # Options handling
 
 
+
 #Creating Map window
 Map = Frame(root1, bg="white", borderwidth=2, relief=GROOVE)
 Map.pack(side=RIGHT, padx=5, pady=5)
@@ -52,42 +56,27 @@ root1.pack()
 Label(ToolBox, text="Toolbox", anchor='n', borderwidth=2, relief=RAISED).pack(padx=2, pady=2)
 Label(Map, text="Map", anchor='n').pack(padx=2, fill=X)
 
+
+#Canvas initialisation
 canvAdapter = canvas_adapter(Map)
-
-def change_painter_size(ScaleValue):
-    offset = int(painter_size.get())
-    canvas.coords(painter, 5, 5, 5 + int(ScaleValue), 5 + int(ScaleValue))
-
 
 def add_painters():
     PainterFrame = LabelFrame(ToolBox, text="Painters", padx = 2, pady = 2)
     PainterFrame.pack(side=TOP, expand=1, fill=BOTH)
-    Tree = Button(PainterFrame, text="Tree", relief=RAISED, anchor='n').pack(side=TOP)
+    Tree = Button(PainterFrame, text="Tree", relief=RAISED, anchor='n', command= canvAdapter.paint_tree).pack(side=TOP)
 
 
 def add_painter_options():
     painter_options_frame = LabelFrame(ToolBox, text="Options", padx = 2, pady = 2)
     painter_options_frame.pack(side=BOTTOM, expand=1, fill=BOTH)
-    Scale(painter_options_frame, orient = HORIZONTAL, variable = canvAdapter.painter_size, command= canvAdapter.change_painter_size).pack(fill=X)
+    Scale(painter_options_frame, orient=HORIZONTAL, variable=canvAdapter.painter_size,
+          command=canvAdapter.change_painter_size).pack(fill=X)
 
 def add_options():
     add_painters()
     add_painter_options()
 
-def canvas_hover(event):
-    offset = int(painter_size.get())
 
-    canvas.coords(painter, event.x - offset/2, event.y - offset/2, event.x + offset - offset/2, event.y + offset - offset/2)
-    #print(event.x + " " + event.y)
-
-
-
-
-canvas = Canvas(Map, bg="#4c94a1")
-
-canvas.pack(expand=1, fill=BOTH, padx=3, pady=3)
-canvas.bind('<Motion>', canvas_hover)
-painter = canvas.create_oval(5, 5,10, 10, fill="black")
 add_options()
 
 window.mainloop()
