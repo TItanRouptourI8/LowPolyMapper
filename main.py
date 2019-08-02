@@ -69,8 +69,12 @@ def add_painters():
 def add_painter_options():
     painter_options_frame = LabelFrame(ToolBox, text="Options", padx = 2, pady = 2)
     painter_options_frame.pack(side=BOTTOM, expand=1, fill=BOTH)
-    Scale(painter_options_frame, orient=HORIZONTAL, variable=canvAdapter.painter_size,
+    Scale(painter_options_frame, orient=HORIZONTAL,label="Painter Size", variable=canvAdapter.painter_size,
           command=canvAdapter.change_painter_size).pack(fill=X)
+    zoom = Scale(painter_options_frame, orient=HORIZONTAL,from_=10,label="Zoom", variable=canvAdapter.map.offset,
+          command=canvAdapter.map.update_offset)
+    zoom.pack(fill=X)
+    zoom.set(20)
 
 def add_options():
     add_painters()

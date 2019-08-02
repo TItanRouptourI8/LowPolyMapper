@@ -12,7 +12,7 @@ class canvas_adapter():
     def __init__(self, Map):
         self.canvas = Canvas(Map, bg="#4c94a1")
         self.canvas.pack(expand=1, fill=BOTH, padx=3, pady=3)
-        self.map = mapper.Map(self.canvas, 50, 50, 10)
+        self.map = mapper.Map(self.canvas, 30, 30, 30)
         #events initialisations
 
         self.canvas.bind('<Motion>', self.canvas_hover)
@@ -30,8 +30,8 @@ class canvas_adapter():
         #map initialisation
 
 
+        self.map.init_map()
         self.map.create_map()
-        self.map.read_map()
 
 
     def paint_tree(self):
@@ -39,6 +39,7 @@ class canvas_adapter():
 
     def change_painter_size(self, scalevalue):
         self.canvas.coords(self.painter, 5, 5, 5 + int(scalevalue), 5 + int(scalevalue))
+        self.canvas.tag_raise(self.painter)
 
     def canvas_hover(self, event):
         offset = int(self.painter_size.get())
