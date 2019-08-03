@@ -45,8 +45,11 @@ class canvas_adapter():
 
     def canvas_hover(self, event):
         offset = int(self.painter_size.get())
-
-        self.canvas.coords(self.painter, event.x - offset / 2, event.y - offset / 2, event.x + offset - offset / 2,
-                      event.y + offset - offset / 2)
+        self.map.delta = (event.x - self.canvas.canvasx(event.x), event.y - self.canvas.canvasy(event.y))
+        self.canvas.coords(self.painter,
+                           -self.map.delta[0] + (event.x - offset / 2),
+                           -self.map.delta[1] + (event.y - offset / 2),
+                           -self.map.delta[0] + (event.x + offset - offset / 2),
+                           -self.map.delta[1] + (event.y + offset - offset / 2))
 
 

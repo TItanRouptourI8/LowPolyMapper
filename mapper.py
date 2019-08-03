@@ -74,11 +74,13 @@ class Map:
 
     def right_start(self, event):
         self.canvas.scan_mark(event.x, event.y)
-        start = ()
+        self.start = (self.canvas.canvasx(event.x), self.canvas.canvasy(event.y))
 
 
 
 
     def right_motion(self, event):
+        self.delta = (event.x - self.canvas.canvasx(event.x), event.y - self.canvas.canvasy(event.y))
+        print(self.delta[0])
         self.canvas.scan_dragto(event.x, event.y, gain=1)
 
