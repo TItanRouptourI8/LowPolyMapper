@@ -13,11 +13,13 @@ class canvas_adapter():
         self.canvas = Canvas(Map, bg="#4c94a1")
         self.canvas.pack(expand=1, fill=BOTH, padx=3, pady=3)
         self.map = mapper.Map(self.canvas, 30, 30, 30)
+
+
         #events initialisations
 
         self.canvas.bind('<Motion>', self.canvas_hover)
         self.canvas.bind('<B3-Motion>', self.map.right_motion)
-        self.canvas.bind('<Button-3>', self.map.right_only)
+        self.canvas.bind('<Button-3>', self.map.right_start)
         self.delta = (0,0)
         self.start_right_click = (0,0)
         #painter initialisation
